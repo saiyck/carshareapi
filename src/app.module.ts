@@ -3,9 +3,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LoginModule } from './login/login.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [MongooseModule.forRoot('mongodb+srv://sai967621:959CelAhokejPnZj@cluster0.slchmpv.mongodb.net/poolapp?retryWrites=true&w=majority') ,LoginModule],
+  imports: [ConfigModule.forRoot(),MongooseModule.forRoot(process.env.MONGO_DB_URL) ,LoginModule],
   controllers: [AppController],
   providers: [AppService],
 })

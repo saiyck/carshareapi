@@ -24,7 +24,7 @@
 /// <reference types="mongoose" />
 /// <reference types="mongoose/types/inferschematype" />
 import { LoginService } from './login.service';
-import { CreateLoginDto } from './dto/create-login.dto';
+import { CreateLoginDto, CreateUserDto } from './dto/create-login.dto';
 import { UpdateLoginDto } from './dto/update-login.dto';
 import { ChangeLogin } from './dto/change-login.dto';
 export declare class LoginController {
@@ -34,12 +34,22 @@ export declare class LoginController {
         statusCode: number;
         status: boolean;
         message: string;
+        data: import("mongoose").Document<unknown, any, import("./schemas/login.schema").User> & Omit<import("./schemas/login.schema").User & {
+            _id: import("mongoose").Types.ObjectId;
+        }, never> & Required<{
+            _id: import("mongoose").Types.ObjectId;
+        }>;
+    }>;
+    createUser(createUserDto: CreateUserDto): Promise<{
+        statusCode: number;
+        status: boolean;
+        message: string;
     }>;
     changePassword(changeLoginDto: ChangeLogin): Promise<{
         statusCode: number;
         status: boolean;
         message: string;
-        data: import("mongoose").Document<unknown, any, import("./schemas/login.schema").Login> & Omit<import("./schemas/login.schema").Login & {
+        data: import("mongoose").Document<unknown, any, import("./schemas/login.schema").User> & Omit<import("./schemas/login.schema").User & {
             _id: import("mongoose").Types.ObjectId;
         }, never> & Required<{
             _id: import("mongoose").Types.ObjectId;
@@ -50,7 +60,7 @@ export declare class LoginController {
         message: string;
         data?: undefined;
     }>;
-    findAll(): Promise<(import("mongoose").Document<unknown, any, import("./schemas/login.schema").Login> & Omit<import("./schemas/login.schema").Login & {
+    findAll(): Promise<(import("mongoose").Document<unknown, any, import("./schemas/login.schema").User> & Omit<import("./schemas/login.schema").User & {
         _id: import("mongoose").Types.ObjectId;
     }, never> & Required<{
         _id: import("mongoose").Types.ObjectId;

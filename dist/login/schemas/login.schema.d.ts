@@ -23,9 +23,11 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 import { HydratedDocument } from "mongoose";
-export type LoginDocument = HydratedDocument<Login>;
-export declare class Login {
+export type UserDocument = HydratedDocument<User>;
+export declare class User {
     username: string;
     password: string;
+    firstName: string;
+    lastName: string;
 }
-export declare const LoginSchema: import("mongoose").Schema<Login, import("mongoose").Model<Login, any, any, any, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, Login>;
+export declare const UserSchema: import("mongoose").Schema<User, import("mongoose").Model<User, any, any, any, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, User>;

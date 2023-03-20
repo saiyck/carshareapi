@@ -2,14 +2,14 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ChangeLogin } from './dto/change-login.dto';
-import { CreateLoginDto } from './dto/create-login.dto';
+import { CreateLoginDto, CreateUserDto } from './dto/create-login.dto';
 import { UpdateLoginDto } from './dto/update-login.dto';
-import { Login, LoginDocument } from './schemas/login.schema';
+import { User, UserDocument } from './schemas/login.schema';
 
 @Injectable()
 export class LoginService {
 
-constructor(@InjectModel(Login.name) private loginModal : Model<LoginDocument>){}
+constructor(@InjectModel(User.name) private loginModal : Model<UserDocument>){}
 
  async create(createLoginDto: CreateLoginDto) {
   try {
@@ -19,27 +19,31 @@ constructor(@InjectModel(Login.name) private loginModal : Model<LoginDocument>){
         return {
           statusCode: 200,
           status: true,
-          message : "authentication success"
+          message : "user logged in successfully!",
+          data : user
         }
       }else{
         return {
           statusCode: 400,
           status: false,
-          message : "wrong password"
+          message : "wrong password",
+          data:null
         }
       }
     }else{
       return {
         statusCode: 404,
         status: false,
-        message: "user not found"
+        message: "user not found",
+        data:null
       };
     }
   } catch (error) {
     return {
       statusCode: 500,
       status: false,
-      message : "Internal server error"
+      message : "Internal server error",
+      data:null
     }
   }
     
@@ -83,6 +87,33 @@ constructor(@InjectModel(Login.name) private loginModal : Model<LoginDocument>){
 
  async findAll() {
     return await this.loginModal.find();
+  }
+
+  async createUser(createUserDto: CreateUserDto) {
+    try {
+      const user = await this.loginModal.findOne({username: createUserDto.username});
+      if(!user){
+        const createUser = new this.loginModal(createUserDto);
+        createUser.save();
+        return {
+          statusCode: 200,
+          status: true,
+          message: "user created"
+        };
+      }else{
+        return {
+          statusCode: 400,
+          status: false,
+          message: "user already exist"
+        };
+      }
+    } catch (error) {
+      return {
+        statusCode: 500,
+        status: false,
+        message : "Internal server error"
+      }
+    }
   }
 
   findOne(id: number) {

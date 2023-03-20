@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { LoginService } from './login.service';
-import { CreateLoginDto } from './dto/create-login.dto';
+import { CreateLoginDto, CreateUserDto } from './dto/create-login.dto';
 import { UpdateLoginDto } from './dto/update-login.dto';
 import { ChangeLogin } from './dto/change-login.dto';
 
@@ -11,6 +11,12 @@ export class LoginController {
   @Post()
   create(@Body() createLoginDto: CreateLoginDto) {
     return this.loginService.create(createLoginDto);
+  }
+
+  @Post('signup')
+  createUser(@Body() createUserDto : CreateUserDto){
+    console.log('create',createUserDto);
+    return this.loginService.createUser(createUserDto);
   }
 
   @Post('changepassword')

@@ -16,7 +16,7 @@ let LoginModule = class LoginModule {
 };
 LoginModule = __decorate([
     (0, common_1.Module)({
-        imports: [mongoose_1.MongooseModule.forFeature([{ name: login_schema_1.Login.name, schema: login_schema_1.LoginSchema }])],
+        imports: [mongoose_1.MongooseModule.forFeature([{ name: login_schema_1.User.name, schema: login_schema_1.UserSchema }])],
         controllers: [login_controller_1.LoginController],
         providers: [login_service_1.LoginService]
     })

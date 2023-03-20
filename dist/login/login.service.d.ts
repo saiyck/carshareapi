@@ -24,22 +24,27 @@
 /// <reference types="mongoose/types/inferschematype" />
 import { Model } from 'mongoose';
 import { ChangeLogin } from './dto/change-login.dto';
-import { CreateLoginDto } from './dto/create-login.dto';
+import { CreateLoginDto, CreateUserDto } from './dto/create-login.dto';
 import { UpdateLoginDto } from './dto/update-login.dto';
-import { Login, LoginDocument } from './schemas/login.schema';
+import { User, UserDocument } from './schemas/login.schema';
 export declare class LoginService {
     private loginModal;
-    constructor(loginModal: Model<LoginDocument>);
+    constructor(loginModal: Model<UserDocument>);
     create(createLoginDto: CreateLoginDto): Promise<{
         statusCode: number;
         status: boolean;
         message: string;
+        data: import("mongoose").Document<unknown, any, User> & Omit<User & {
+            _id: import("mongoose").Types.ObjectId;
+        }, never> & Required<{
+            _id: import("mongoose").Types.ObjectId;
+        }>;
     }>;
     changePassword(changeLoginDto: ChangeLogin): Promise<{
         statusCode: number;
         status: boolean;
         message: string;
-        data: import("mongoose").Document<unknown, any, Login> & Omit<Login & {
+        data: import("mongoose").Document<unknown, any, User> & Omit<User & {
             _id: import("mongoose").Types.ObjectId;
         }, never> & Required<{
             _id: import("mongoose").Types.ObjectId;
@@ -50,11 +55,16 @@ export declare class LoginService {
         message: string;
         data?: undefined;
     }>;
-    findAll(): Promise<(import("mongoose").Document<unknown, any, Login> & Omit<Login & {
+    findAll(): Promise<(import("mongoose").Document<unknown, any, User> & Omit<User & {
         _id: import("mongoose").Types.ObjectId;
     }, never> & Required<{
         _id: import("mongoose").Types.ObjectId;
     }>)[]>;
+    createUser(createUserDto: CreateUserDto): Promise<{
+        statusCode: number;
+        status: boolean;
+        message: string;
+    }>;
     findOne(id: number): string;
     update(id: number, updateLoginDto: UpdateLoginDto): string;
     remove(id: number): string;

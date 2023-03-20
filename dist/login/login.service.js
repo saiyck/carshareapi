@@ -29,14 +29,16 @@ let LoginService = class LoginService {
                     return {
                         statusCode: 200,
                         status: true,
-                        message: "authentication success"
+                        message: "user logged in successfully!",
+                        data: user
                     };
                 }
                 else {
                     return {
                         statusCode: 400,
                         status: false,
-                        message: "wrong password"
+                        message: "wrong password",
+                        data: null
                     };
                 }
             }
@@ -44,7 +46,8 @@ let LoginService = class LoginService {
                 return {
                     statusCode: 404,
                     status: false,
-                    message: "user not found"
+                    message: "user not found",
+                    data: null
                 };
             }
         }
@@ -52,7 +55,8 @@ let LoginService = class LoginService {
             return {
                 statusCode: 500,
                 status: false,
-                message: "Internal server error"
+                message: "Internal server error",
+                data: null
             };
         }
     }
@@ -97,6 +101,34 @@ let LoginService = class LoginService {
     async findAll() {
         return await this.loginModal.find();
     }
+    async createUser(createUserDto) {
+        try {
+            const user = await this.loginModal.findOne({ username: createUserDto.username });
+            if (!user) {
+                const createUser = new this.loginModal(createUserDto);
+                createUser.save();
+                return {
+                    statusCode: 200,
+                    status: true,
+                    message: "user created"
+                };
+            }
+            else {
+                return {
+                    statusCode: 400,
+                    status: false,
+                    message: "user already exist"
+                };
+            }
+        }
+        catch (error) {
+            return {
+                statusCode: 500,
+                status: false,
+                message: "Internal server error"
+            };
+        }
+    }
     findOne(id) {
         return `This action returns a #${id} login`;
     }
@@ -109,7 +141,7 @@ let LoginService = class LoginService {
 };
 LoginService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, mongoose_1.InjectModel)(login_schema_1.Login.name)),
+    __param(0, (0, mongoose_1.InjectModel)(login_schema_1.User.name)),
     __metadata("design:paramtypes", [mongoose_2.Model])
 ], LoginService);
 exports.LoginService = LoginService;

@@ -25,6 +25,10 @@ let LoginController = class LoginController {
     create(createLoginDto) {
         return this.loginService.create(createLoginDto);
     }
+    createUser(createUserDto) {
+        console.log('create', createUserDto);
+        return this.loginService.createUser(createUserDto);
+    }
     changePassword(changeLoginDto) {
         return this.loginService.changePassword(changeLoginDto);
     }
@@ -48,6 +52,13 @@ __decorate([
     __metadata("design:paramtypes", [create_login_dto_1.CreateLoginDto]),
     __metadata("design:returntype", void 0)
 ], LoginController.prototype, "create", null);
+__decorate([
+    (0, common_1.Post)('signup'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_login_dto_1.CreateUserDto]),
+    __metadata("design:returntype", void 0)
+], LoginController.prototype, "createUser", null);
 __decorate([
     (0, common_1.Post)('changepassword'),
     __param(0, (0, common_1.Body)()),
